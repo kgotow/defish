@@ -24,7 +24,7 @@ public class Defish {
             if (arg.startsWith("-a=")) {
                 amount = Double.parseDouble(arg.substring(3));
                 if (amount < 0) amount = 0;
-                if (amount > 1) amount = 1;
+                else if (amount > 1) amount = 1;
             } else if (arg.startsWith("-c=")) {
                 int i;
                 for (i = 3; i < arg.length(); i++) {
