@@ -1,7 +1,11 @@
 # defish
 defish photo images taken by fish-eye lens.
 
-<img src="https://github.com/kgotow/defish/blob/master/samples/K1031573.jpg" width="800"/>
+before:
+<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025.jpg" width="400"/>
+
+after:
+<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025-df-0.65-16_9.jpg" width="400"/>
 
 ### Usage:
 java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
@@ -31,10 +35,10 @@ jpeg quality
 0.0 <= QUALITY <= 1.0
 default: 0.8
     
-### <INPUT FILES or DIRECTORIES ...>
+### &lt;INPUT FILES or DIRECTORIES ...&gt;
 jpeg files or directories
   
-### <OUTPUT FILES>
+### &lt;OUTPUT FILES&gt;
 jpeg files created in same directories of input files with suffix "-df-AMOUNT-WIDHT_HEIGHT"
 
 example: image.jpg -> image-df-0.65-16_9.jpg
