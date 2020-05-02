@@ -10,7 +10,7 @@ after:
 <img src="https://github.com/kgotow/defish/blob/master/samples/K1032025-df-0.65-16_9.jpg" width="600"/>
 
 ### Usage:
-java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
+java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES ...&gt;
 
 ### [-a=AMOUNT]
 amount of defish correction
