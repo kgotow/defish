@@ -2,10 +2,12 @@
 defish photo images taken by fish-eye lens.
 
 before:
-<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025.jpg" width="400"/>
+
+<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025.jpg" width="600"/>
 
 after:
-<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025-df-0.65-16_9.jpg" width="400"/>
+
+<img src="https://github.com/kgotow/defish/blob/master/samples/K1032025-df-0.65-16_9.jpg" width="600"/>
 
 ### Usage:
 java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
