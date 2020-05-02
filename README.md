@@ -1,14 +1,15 @@
 # defish
 defish photo images taken by fish-eye lens.
-
-<b>Usage:</b><br/>
-  java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
+<dl>
+<dt>Usage:</dt>
+<dd>java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;</dd>
   
-  [-a=AMOUNT]
-    amount of defish correction<br/>
-    0.0 <= AMOUNT <= 1.0<br/>
-    default: 0.65<br/>
-    recommended: 0.6 <= AMMOUNT <= 0.8, depend on field of view (0.65 for 17mm, 0.7 for 16mm)
+<dt>[-a=AMOUNT]</dt>
+<dd>amount of defish correction</dd>
+<dd>0.0 <= AMOUNT <= 1.0</dd>
+<dd>default: 0.65</dd>
+<dd>recommended: 0.6 <= AMMOUNT <= 0.8, depend on field of view (0.65 for 17mm, 0.7 for 16mm)</dd>
+</dt>
   
   [-c=WIDTH:HEIGHT] 
     crop aspect ratio
