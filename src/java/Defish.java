@@ -35,7 +35,8 @@ public class Defish {
                 cheight = Integer.parseInt(arg.substring(i+1));
             } else if (arg.startsWith("-q=")) {
                 quality = Double.parseDouble(arg.substring(3));
-                if (quality <= 0 || quality > 1) quality = QUALITY;
+                if (quality < 0) quality = 0;
+                else if (quality > 1) quality = 1;
             } else {
                 getFiles(new File(arg), set);
             }
