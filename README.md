@@ -1,13 +1,13 @@
 # defish
 defish photo images taken by fish-eye lens.
 
-Usage:
-  java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] <INPUT FILES or DIRECTORIES>
+<b>Usage:</b><br/>
+  java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
   
   [-a=AMOUNT]
-    amount of defish correction
-    0.0 <= AMOUNT <= 1.0 
-    default: 0.65
+    amount of defish correction<br/>
+    0.0 <= AMOUNT <= 1.0<br/>
+    default: 0.65<br/>
     recommended: 0.6 <= AMMOUNT <= 0.8, depend on field of view (0.65 for 17mm, 0.7 for 16mm)
   
   [-c=WIDTH:HEIGHT] 
