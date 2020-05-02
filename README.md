@@ -1,6 +1,8 @@
 # defish
 defish photo images taken by fish-eye lens.
 
+<img src="https://github.com/kgotow/defish/blob/master/samples/K1031573.jpg" width="800"/>
+
 ### Usage:
 java -jar defish.jar [-a=AMOUNT] [-c=WIDTH:HEIGHT] [-q=QUALITY] &lt;INPUT FILES or DIRECTORIES&gt;
 
