@@ -41,7 +41,7 @@ default:  0.8
 jpeg files or directories
   
 ### &lt;OUTPUT FILES&gt;
-jpeg files created in same directories of input files with suffix "-df-AMOUNT-WIDHT_HEIGHT"
+jpeg files created in same directories of input files with suffix "-df-AMOUNT-WIDTH_HEIGHT"
 
 example:  image.jpg -> image-df-0.65-16_9.jpg
   
