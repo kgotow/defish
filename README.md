@@ -51,7 +51,7 @@ jpeg files or directories
 ### &lt;OUTPUT FILES&gt;
 jpeg files created in same directories of input files with suffix "-df-AMOUNT-WIDTH_HEIGHT"
 
-example:  image.jpg -> image-df-0.65-16_9.jpg
+example:  image.jpg -> image-df-0.45-16_9.jpg
   
 ### Examples:
 java -jar defish.jar -a=0.45 -c=16:9 image1.jpg image2.jpg
