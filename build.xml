@@ -23,9 +23,9 @@
   <target name="test" depends="jar">
     <java jar="${jar}" fork="true">
       <arg value="samples"/>
-      <arg value="-a=0.65"/>
-      <arg value="-q=0.9"/>
+      <arg value="-a=0.45"/>
       <arg value="-c=16:9"/>
+      <arg value="-q=9"/>
     </java>
   </target>
 
