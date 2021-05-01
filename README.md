@@ -56,4 +56,4 @@ example:  image.jpg -> image-df-0.65-16_9.jpg
 ### Examples:
 java -jar defish.jar -a=0.45 -c=16:9 image1.jpg image2.jpg
 
-java -jar defish.jar -a=0.5.5 -q=0.9 dir1 dir2 file1.jpg file2.jpg
+java -jar defish.jar -a=0.55 -q=0.9 dir1 dir2 file1.jpg file2.jpg
