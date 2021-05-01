@@ -13,7 +13,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.stream.ImageOutputStream;
 
 public class Defish {
-    private static final double AMOUNT = 0.65;
+    private static final double AMOUNT = 0.5;
     private static final double QUALITY = 0.8;
     private static final String SUFFIX = "-df-";
     public static void main (String[] args) throws IOException {
@@ -128,11 +128,9 @@ public class Defish {
     }
     private static BufferedImage convert(BufferedImage image1, double amount,
                                          int cwidth, int cheight) {
-        if (amount <= 0) return image1;
         int width1 = image1.getWidth(), height1 = image1.getHeight();
         int width2, height2, w1, h1, w2, h2;
-        double rw, ddww;
-        if (width1 > height1) {
+        if (width1 >= height1) {
             w1 = width1/2;
             h1 = height1/2;
         } else {
@@ -147,28 +145,40 @@ public class Defish {
             cw2 = cheight;
             ch2 = cwidth;
         }
-        double a0 = 1, a1 = Math.sqrt(2);
-        double a = a0 + (a1-a0) * (0.1 + 0.8 * amount);
-        // r*w*2 / sqrt((d*w*2)*(d*w*2) + w*w + w*w) = 1/a
-        // r*w*2 / sqrt((d*w*2)*(d*w*2) + w*w) = 1
-        // r = (double) 1 / 2 / Math.sqrt(a*a-1);
-        rw = (double) w1 / Math.sqrt(a*a-1);
-        ddww = rw*rw - h1*h1;
-        w2 = (int) (w1 * Math.sqrt(ddww / (rw*rw - w1*w1)));
-        h2 = h1;
-        if ((double) h2 / w2 < (double) ch2 / cw2) {
+        double a, a0 = 0.5, a3 = 1.5, a4 = 12;
+        double a1 = (double) h1 / Math.sqrt(w1*w1+h1*h1), a2 = a1 * 1.1;
+        if (amount < 0.1) {
+            a = a0 + (a3-a0) * (1-0.1);
+            a = a + (a4-a) * (0.1-amount) / 0.1;
+        } else {
+            a = a0 + (a3-a0) * (1-amount);
+        }
+        double w0 = w1, h0 = h1;
+        if (a < a2) { // h1 -> h0 < rw
+            h0 = Math.sqrt(w1*w1+h1*h1) * (a0 + (a-a0) * (a1-a0) / (a2-a0));
+        }
+        double rw = Math.sqrt(w1*w1+h1*h1) * a;
+        double ddww = rw*rw - h0*h0;
+        if (w0 < rw) {
+            w2 = (int) (w0 * Math.sqrt((rw*rw - h0*h0) / (rw*rw - w0*w0)));
+            h2 = (int) h0;
+        } else {
+            w2 = (int) rw;
+            h2 = (int) h0;
+        }
+        if ((double) h2 / w2 <= (double) ch2 / cw2) {
             w2 = h2 * cw2/ch2;
             double s = Math.sqrt(ddww + w2*w2 + h2*h2) / rw;
             w2 = ((int)(w2/s)+3)/4*4;
             h2 = ((int)(h2/s)+3)/4*4;
-            ddww = h2*h2 * (rw*rw/h1/h1-1);
+            ddww = h2*h2 * (rw*rw/h0/h0-1);
         } else {
             h2 = w2 * ch2/cw2;
-            ddww = rw*rw/w1/w1*w2*w2 - w2*w2;
             double s = Math.sqrt(ddww + w2*w2 + h2*h2) / rw;
             w2 = ((int)(w2/s)+3)/4*4;
             h2 = ((int)(h2/s)+3)/4*4;
-            ddww = w2*w2 * (rw*rw/w1/w1-1);
+            if (w0 < rw) ddww = w2*w2 * (rw*rw/w0/w0-1);
+            else ddww = h2*h2 * (rw*rw/h0/h0-1);
         }
         if (width1 > height1) {
             width2 = w2*2;
@@ -183,15 +193,12 @@ public class Defish {
         }
         BufferedImage image2 = new BufferedImage(width2, height2,
                                                  image1.getType());
-        byte[] ds1
-            = ((DataBufferByte)image1.getRaster().getDataBuffer()).getData();
-        byte[] ds2
-            = ((DataBufferByte)image2.getRaster().getDataBuffer()).getData();
+        byte[] ds1 = ((DataBufferByte)image1.getRaster().getDataBuffer()).getData();
+        byte[] ds2 = ((DataBufferByte)image2.getRaster().getDataBuffer()).getData();
         for (int x2 = 0; x2 < width2; x2++) {
             for (int y2 = 0; y2 < height2; y2++) {
-                double rate = rw /
-                    Math.sqrt(ddww + ((x2-w2)*(x2-w2) + (y2-h2)*(y2-h2)));
-                double x1 = rate * (x2-w2) + w1, y1 = rate * (y2-h2) + h1;
+                double p = rw / Math.sqrt(ddww + ((x2-w2)*(x2-w2) + (y2-h2)*(y2-h2)));
+                double x1 = p * (x2-w2) + w1, y1 = p * (y2-h2) + h1;
                 double b = 0, g = 0, r = 0;
                 for (int x = (int)x1; x <= (int)(x1+1); x++) {
                     for (int y = (int)y1; y <= (int)(y1+1); y++) {
