@@ -200,16 +200,47 @@ public class Defish {
                 double p = rw / Math.sqrt(ddww + ((x2-w2)*(x2-w2) + (y2-h2)*(y2-h2)));
                 double x1 = p * (x2-w2) + w1, y1 = p * (y2-h2) + h1;
                 double b = 0, g = 0, r = 0;
-                for (int x = (int)x1; x <= (int)(x1+1); x++) {
-                    for (int y = (int)y1; y <= (int)(y1+1); y++) {
-                        double s; // bilinear
-                        if (0 <= x && x < width1 && 0 <= y && y < height1 &&
-                            (s = (x <= x1 ? x+1-x1 : x1-x+1) *
-                             (y <= y1 ? y+1-y1 : y1-y+1)) > 0) {
-                            int z1 = (x + y*width1) * 3;
-                            b += s * (0xff & ds1[z1]);
-                            g += s * (0xff & ds1[z1+1]);
-                            r += s * (0xff & ds1[z1+2]);
+                if (false) { //nearest neighbor
+                    int x = (int)Math.round(x1), y = (int)Math.round(y1);
+                    int z1 = ((x < 0 ? 0 :
+                               (x >= width1 ? width1-1 : x)) +
+                              (y < 0 ? 0 :
+                               (y >= height1 ? height1-1 : y))
+                              * width1) * 3;
+                    b = (0xff & ds1[z1]);
+                    g = (0xff & ds1[z1+1]);
+                    r = (0xff & ds1[z1+2]);
+                } else if (false) { //bilinear
+                    for (int x = (int)x1; x <= (int)(x1+1); x++) {
+                        for (int y = (int)y1; y <= (int)(y1+1); y++) {
+                            double s = ((x <= x1 ? x+1-x1 : x1-x+1) *
+                                        (y <= y1 ? y+1-y1 : y1-y+1));
+                            if (s > 0) {
+                                int z1 = ((x < 0 ? 0 :
+                                           (x >= width1 ? width1-1 : x)) +
+                                          (y < 0 ? 0 :
+                                           (y >= height1 ? height1-1 : y))
+                                          * width1) * 3;
+                                b += s * (0xff & ds1[z1]);
+                                g += s * (0xff & ds1[z1+1]);
+                                r += s * (0xff & ds1[z1+2]);
+                            }
+                        }
+                    }
+                } else { // bicubic
+                    for (int x = (int)x1-1; x <= (int)x1+2; x++) {
+                        for (int y = (int)y1-1; y <= (int)y1+2; y++) {
+                            double s = bicubicSinc(x1-x) * bicubicSinc(y1-y);
+                            if (s != 0) {
+                                int z1 = ((x < 0 ? 0 :
+                                           (x >= width1 ? width1-1 : x)) +
+                                          (y < 0 ? 0 :
+                                           (y >= height1 ? height1-1 : y))
+                                          * width1) * 3;
+                                b += s * (0xff & ds1[z1]);
+                                g += s * (0xff & ds1[z1+1]);
+                                r += s * (0xff & ds1[z1+2]);
+                            }
                         }
                     }
                 }
@@ -229,5 +260,14 @@ public class Defish {
             }
         }
         return image2;
+    }
+    //private static final double ALPHA = -1;
+    private static final double ALPHA = -0.75;
+    //private static final double ALPHA = -0.5;
+    private static double bicubicSinc(double t) {
+        if (t < 0) t = -t;
+        if (t <= 1) return (ALPHA+2)*t*t*t - (ALPHA+3)*t*t + 1;
+        if (t <= 2) return ALPHA*t*t*t - 5*ALPHA*t*t + 8*ALPHA*t - 4*ALPHA;
+        return 0;
     }
 }
